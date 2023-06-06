@@ -15,5 +15,8 @@ prompt = PromptTemplate(
     template="What is a good name for a company that makes {product}"
 )
 
-chain = LLMChain(llm=llm, prompt=prompt)
-print(chain.run("colorful socks"))
+chain = LLMChain(llm=llm, 
+                 prompt=prompt
+)
+
+print(chain.run("pick and shovel artificial intelligence tools"))

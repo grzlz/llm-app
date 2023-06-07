@@ -1,5 +1,6 @@
 import os
 import requests
+import random
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 from langchain.llms import OpenAI
@@ -49,10 +50,11 @@ reviews = [
 
     "I bought apples from Walmart. They were okay, but not the best I've had.",
     "I got kiwis from Superama. They were fine, but I've had better.",
-    "I purchased bananas from Bodega Aurrera. They were decent, but not great.",
+    "I got kiwis from Bodega Aurrera. They were very fresh. I'm extremely satisfied.",
     "I bought mangos from Walmart. They were average, nothing special.",
     "I got coconuts from Superama. They were satisfactory, but not outstanding.",
 
+    "I purchased bananas from Bodega Aurrera. They were decent, but not great.",
     "I bought apples from Bodega Aurrera. They were good, but not the best I've had.",
     "I got kiwis from Walmart. They were nice, but I've had better.",
     "I purchased bananas from Superama. They were tasty, but not great.",
@@ -60,14 +62,14 @@ reviews = [
     "I got coconuts from Walmart. They were yummy, but not outstanding.",
 
     "I bought apples from Superama. They were delicious. I'm very happy.",
-    "I got kiwis from Bodega Aurrera. They were very fresh. I'm extremely satisfied.",
     "I purchased bananas from Walmart. They were excellent. I'm very pleased.",
     "I bought mangos from Superama. They were fantastic. I'm extremely happy.",
     "I got coconuts from Bodega Aurrera. They were perfect. I'm very delighted."
 ]
-
-
+reviews = random.shuffle(reviews)
 process_reviews(reviews)
+
+
 
 
 

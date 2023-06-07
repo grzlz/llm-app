@@ -1,4 +1,4 @@
-reviews = reviews = [
+reviews = [
     "I bought apples from Walmart and they were rotten. Very disappointed.",
     "The kiwis I got from Walmart were not fresh at all. I won't be buying from them again.",
     "Walmart's bananas were overripe. Not happy with my purchase.",

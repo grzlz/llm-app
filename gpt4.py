@@ -66,7 +66,8 @@ reviews = [
     "I bought mangos from Superama. They were fantastic. I'm extremely happy.",
     "I got coconuts from Bodega Aurrera. They were perfect. I'm very delighted."
 ]
-reviews = random.shuffle(reviews)
+random.shuffle(reviews)
+
 process_reviews(reviews)
 
 

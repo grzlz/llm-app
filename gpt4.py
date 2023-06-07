@@ -1,6 +1,4 @@
 import os
-import requests
-import random
 from dotenv import load_dotenv
 from langchain.llms import OpenAI
 
@@ -30,39 +28,3 @@ def get_sentiment(review):
 def process_reviews(reviews):
     results = [get_sentiment(review) for review in reviews]
     return results
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Define a function to plot sentiment scores
-def plot_sentiment_scores(sentiment_scores):
-    manufacturers = list(sentiment_scores.keys())
-    avg_scores = [sum(scores)/len(scores) for scores in sentiment_scores.values()]
-    plt.bar(manufacturers, avg_scores)
-    plt.xlabel('Manufacturer')
-    plt.ylabel('Average Sentiment Score')
-    plt.title('Sentiment Analysis of Product Reviews')
-    plt.show()
-
-# Get reviews from e-commerce site
-# This is a placeholder, you need to replace it with actual code to get reviews
-# reviews = ["Review 1", "Review 2", "Review 3"]
-
-# Process reviews
-# results, sentiment_scores = process_reviews(reviews)
-
-# Plot sentiment scores
-# plot_sentiment_scores(sentiment_scores)

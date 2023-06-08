@@ -124,6 +124,7 @@ server <- function(input, output) {
     if (res$status_code == 200) {
       print("Data retrieved successfully")
       data <- content(res)
+      print(data)
       output$contents <- renderTable({
         table_data <- fromJSON(toJSON(data))
         colnames(table_data) <- c("Opiniones de clientes", colnames(table_data)[-1])

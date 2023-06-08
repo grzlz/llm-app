@@ -3,7 +3,7 @@ import csv
 import uvicorn
 import pandas as pd
 from reviews import reviews
-from gpt4 import process_reviews
+from gpt4 import get_sentiment
 from fastapi import FastAPI, UploadFile
 
 app = FastAPI()
@@ -17,7 +17,9 @@ async def upload_csv(file: UploadFile):
     data = contents.decode('utf-8').splitlines()
     reader = csv.reader(data)
     next(reader)  # Skip the header
-    uploaded_data = [row[0] for row in reader]  # Assuming 'review' is the first column
+    uploaded_data = [get_sentiment(row[0]) for row in reader]  # Assuming 'review' is the first column
+    print(uploaded_data)
+
     # Now you can process the list 'reviews' as needed
     return {"filename": file.filename}
 

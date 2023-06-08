@@ -1,7 +1,9 @@
 library(shiny)
 library(httr)
 library(jsonlite)
-
+library(ggplot2)
+library(dplyr)
+  
 ui <- fluidPage(
   tags$head(
     tags$style(HTML("
@@ -101,7 +103,7 @@ server <- function(input, output) {
     req(input$file1)
     
     # Upload the file to the FastAPI endpoint
-    res <- POST("http://localhost:5000/uploadcsv/", body = list(file = upload_file(input$file1$datapath[1])))
+    res <- POST("http://204.236.191.28:5000/uploadcsv/", body = list(file = upload_file(input$file1$datapath[1])))
     
     # Check the response
     if (res$status_code == 200) {
@@ -118,7 +120,7 @@ server <- function(input, output) {
   
   observeEvent(input$fetch, {
     # Get the processed data from the API
-    res <- GET("http://localhost:5000/data/")
+    res <- GET("http://204.236.191.28:5000/data/")
     
     # Check the response
     if (res$status_code == 200) {
@@ -130,17 +132,35 @@ server <- function(input, output) {
       # Rename columns if needed
       colnames(df) <- c("provider", "product", "sentiment_score")
       
+      df$sentiment_score <- as.numeric(df$sentiment_score)
+      
       # Print the resulting dataframe
       print(df)
-
-      #output$contents <- renderTable({
-       # print(table_data)
-        #colnames(table_data) <- c("Opiniones de clientes", colnames(table_data)[-1])
-        #table_data
-      #})
+      
+      # Define the custom color palette
+      custom_palette <- c("#5B85AA", "#CACF85", "#EF2D56", "#FA7921")
+      
+      # Set the theme with all-white background
+      theme_custom <- theme_minimal()
       output$plot1 <- renderPlot({
-        plot(10:1)
+        df %>% 
+          group_by(provider) %>% 
+          summarise(mean_sentiment = mean(sentiment_score)) %>% 
+          ggplot(aes(provider, mean_sentiment)) + geom_col(fill = custom_palette[3], color = "black") +
+          labs(y = "Sentimiento promedio", x = "Proveedor") +
+          theme_custom
       })
+      output$plot2 <- renderPlot({
+        df %>%
+          group_by(provider, product) %>%
+          summarise(mean_sentiment = mean(sentiment_score)) %>%
+          ggplot(aes(provider, mean_sentiment, fill = product)) +
+          geom_col(position = position_dodge(width = 0.9), color = "black") +
+          labs(y = "Sentimiento promedio", x = "Proveedor", fill = "Producto") +
+          scale_fill_manual(values = custom_palette) +
+          theme_custom
+      })
+      
     } else {
       print("Failed to retrieve data")
     }

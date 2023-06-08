@@ -2,7 +2,6 @@ import io
 import csv
 import uvicorn
 import pandas as pd
-from reviews import reviews
 from gpt4 import get_sentiment
 from fastapi import FastAPI, UploadFile
 

@@ -1,0 +1,14 @@
+name: sentiment-analysis
+title: sentiment-analysis
+username:
+account: grzlz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9267620
+bundleId: 7318902
+url: https://grzlz.shinyapps.io/sentiment-analysis/
+when: 1686188546.87213
+lastSyncTime: 1686188546.87216
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .env|__pycache__/gpt4.cpython-39.pyc|__pycache__/reviews.cpython-39.pyc|archivo.csv|backend.py|gpt4.py|main.py|reviews.py

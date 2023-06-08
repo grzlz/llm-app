@@ -12,18 +12,19 @@ uploaded_data = []
 
 @app.post("/uploadcsv/")
 async def upload_csv(file: UploadFile):
+    global uploaded_data
     contents = await file.read()
     data = contents.decode('utf-8').splitlines()
     reader = csv.reader(data)
     next(reader)  # Skip the header
-    reviews = [row[0] for row in reader]  # Assuming 'review' is the first column
-    print(reviews)
+    uploaded_data = [row[0] for row in reader]  # Assuming 'review' is the first column
     # Now you can process the list 'reviews' as needed
     return {"filename": file.filename}
 
 @app.get('/data')
 def get_data():
-    data = process_reviews(reviews)
+    global uploaded_data
+    data = uploaded_data
     return data
 
 uvicorn.run(app, host='localhost', port=5000)

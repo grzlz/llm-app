@@ -39,15 +39,36 @@ ui <- fluidPage(
       .graphs {
         padding: 20px;
         margin: 20px;
+        background-color: #6B6054;
         display: flex;
-        background-color: #6B6054 ;
+        flex-direction: column;
       }
       .graph1, .graph2 {
-        width: 50%;
         background-color: white;
         padding: 20px;
+        width: 90%;
         margin: 20px;
       }
+      
+      .table1 {
+        width: 100%;
+        margin: 20px auto;  # center table
+      }
+      
+      .table1 .shiny-table-output {
+        background-color: #6B6054;  # same as .graphs
+        }
+      
+      @media (min-width: 768px) {
+        .graphs {
+          flex-direction: row;
+        }
+        .graph1, .graph2, .table1 {
+          width: 50%;
+        }
+      }
+      
+      
       
       h2 {
         margin-top: 30px;
@@ -72,7 +93,7 @@ ui <- fluidPage(
       div(class = "graph1", plotOutput("plot1")),
       div(class = "graph2", plotOutput("plot2"))
   ),
-  tableOutput("contents")
+  div(class = "table1", tableOutput("contents"))
 )
 
 server <- function(input, output) {
@@ -85,6 +106,11 @@ server <- function(input, output) {
     # Check the response
     if (res$status_code == 200) {
       print("File uploaded successfully")
+      data <- read.csv(input$file1$datapath[1])
+      output$contents <- renderTable({
+        data
+      })
+      
     } else {
       print("Failed to upload file")
     }
@@ -98,7 +124,14 @@ server <- function(input, output) {
     if (res$status_code == 200) {
       print("Data retrieved successfully")
       data <- content(res)
-      output$contents <- renderTable(fromJSON(toJSON(data)))
+      output$contents <- renderTable({
+        table_data <- fromJSON(toJSON(data))
+        colnames(table_data) <- c("Opiniones de clientes", colnames(table_data)[-1])
+        table_data
+      })
+      output$plot1 <- renderPlot({
+        plot(10:1)
+      })
     } else {
       print("Failed to retrieve data")
     }

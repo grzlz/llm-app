@@ -25,6 +25,7 @@ async def upload_csv(file: UploadFile):
 def get_data():
     global uploaded_data
     data = uploaded_data
+    print(data)
     return data
 
 uvicorn.run(app, host='localhost', port=5000)

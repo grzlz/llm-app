@@ -123,13 +123,21 @@ server <- function(input, output) {
     # Check the response
     if (res$status_code == 200) {
       print("Data retrieved successfully")
-      data <- content(res)
-      print(data)
-      output$contents <- renderTable({
-        table_data <- fromJSON(toJSON(data))
-        colnames(table_data) <- c("Opiniones de clientes", colnames(table_data)[-1])
-        table_data
-      })
+      # Parse JSON response
+      data <- content(res, "text")  # Get the response content as text
+      df <- fromJSON(data)          # Convert JSON to a data frame
+      
+      # Rename columns if needed
+      colnames(df) <- c("provider", "product", "sentiment_score")
+      
+      # Print the resulting dataframe
+      print(df)
+
+      #output$contents <- renderTable({
+       # print(table_data)
+        #colnames(table_data) <- c("Opiniones de clientes", colnames(table_data)[-1])
+        #table_data
+      #})
       output$plot1 <- renderPlot({
         plot(10:1)
       })
